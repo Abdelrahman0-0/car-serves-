@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Profile | Car Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modified stylep.css file with original colors */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Tajawal', sans-serif;
+}
+body {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    line-height: 1.8;
+    padding: 20px;
+    direction: ltr;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.container {
+    width: 100%;
+    max-width: 1000px;
+    background-color: #34495e;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    margin: 30px auto;
+}
+.profile-header {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+.user-avatar {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+    background-color: #232b34;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    color: #bdc3c7;
+    border: 5px solid #1abc9c;
+}
+.profile-header h1 {
+    font-size: 28px;
+    color: #ecdbba;
+    margin-bottom: 5px;
+}
+.member-since {
+    color: #bdc3c7;
+    font-size: 14px;
+}
+.profile-sections {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+}
+.profile-section {
+    background-color: #232b34;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    border: 1px solid #2c3e50;
+}
+.section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #2c3e50;
+}
+.section-header i {
+    margin-right: 10px;
+    color: #1abc9c;
+    font-size: 20px;
+}
+.section-header h2 {
+    font-size: 20px;
+    color: #ecf0f1;
+}
+.profile-info, .rental-details {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+.info-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed #2c3e50;
+    color: #bdc3c7;
+}
+.info-icon {
+    margin-right: 10px;
+    color: #1abc9c;
+    width: 25px;
+    text-align: center;
+}
+.info-value {
+    margin-left: auto;
+}
+strong {
+    color: #1abc9c;
+    margin-right: 5px;
+}
+.no-data-message {
+    text-align: center;
+    color: #bdc3c7;
+    padding: 20px;
+}
+/* Style for booking and maintenance history */
+.history-list, .service-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+.history-item, .service-item {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1fr 1fr;
+    align-items: center;
+    padding: 12px;
+    background-color: #2c3e50;
+    border-radius: 8px;
+    font-size: 14px;
+}
+.history-status, .service-status {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    text-align: center;
+}
+.completed {
+    background-color: #155724;
+    color: #d4edda;
+}
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn i {
+    margin-right: 8px;
+}
+.btn-primary {
+    background-color: #1abc9c;
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #16a085;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.btn-secondary {
+    background-color: #3498db;
+    color: white;
+}
+.btn-secondary:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+.btn-danger:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.btn-small {
+    padding: 5px 10px;
+    font-size: 12px;
+    background-color: #34495e;
+    border: 1px solid #2c3e50;
+    color: #ecf0f1;
+}
+.btn-small:hover {
+    background-color: #3d566e;
+}
+.btn-extend {
+    background-color: #f39c12;
+    color: white;
+}
+.btn-extend:hover {
+    background-color: #d35400;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.btn-cancel {
+    background-color: #e74c3c;
+    color: white;
+}
+.btn-cancel:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.rental-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+}
+.profile-footer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 40px;
+}
+/* Responsive design for different screen sizes */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    .history-item, .service-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    .profile-footer {
+        grid-template-columns: 1fr;
+    }
+    .rental-actions {
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width: 480px) {
+    .user-avatar {
+        width: 80px;
+        height: 80px;
+        font-size: 40px;
+    }
+    .profile-header h1 {
+        font-size: 22px;
+    }
+    .section-header h2 {
+        font-size: 18px;
+    }
+}
+    </style>
+</head>
+<body>
+    <form action="profile.php" method="post">
+        <div class="container">
+            <header class="profile-header">
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <h1 id="customer-name">Customer Name</h1>
+                <p class="member-since">Member since: <span id="join-date">2023</span></p>
+            </header>
+            <div class="profile-sections">
+                <!-- Personal Information -->
+                <section class="profile-section">
+                    <div class="section-header">
+                        <i class="fas fa-user"></i>
+                        <h2>Personal Information</h2>
+                    </div>
+                    <div class="profile-info">
+                        <div class="info-item">
+                            <span class="info-icon"><i class="fas fa-signature"></i></span>
+                            <strong>Full Name:</strong> 
+                            <span id="name" class="info-value">Mohammad Ahmed</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon"><i class="fas fa-envelope"></i></span>
+                            <strong>Email:</strong> 
+                            <span id="email" class="info-value">example@email.com</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon"><i class="fas fa-phone"></i></span>
+                            <strong>Phone Number:</strong> 
+                            <span id="phone" class="info-value">+966 50 123 4567</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon"><i class="fas fa-map-marker-alt"></i></span>
+                            <strong>Address:</strong> 
+                            <span id="address" class="info-value">Riyadh, Saudi Arabia</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon"><i class="fas fa-id-card"></i></span>
+                            <strong>ID Number:</strong> 
+                            <span id="id-number" class="info-value">1234567890</span>
+                        </div>
+                    </div>
+                </section>
+                <!-- Current Rental Information -->
+                <section class="profile-section">
+                    <div class="section-header">
+                        <i class="fas fa-car"></i>
+                        <h2>Current Car Bookings</h2>
+                    </div>
+                    <div class="rental-details" id="current-rental">
+                        <div class="info-item">
+                            <span class="info-icon"><i class="fas fa-car-side"></i></span>
+                            <strong>Car Model:</strong> 
+                            <span id="car-model" class="info-value">Toyota Camry 2023</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon"><i class="fas fa-calendar-check"></i></span>
+                            <strong>Rental Date:</strong> 
+                            <span id="rental-date" class="info-value">06/15/2023</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon"><i class="fas fa-calendar-times"></i></span>
+                            <strong>Return Date:</strong> 
+                            <span id="return-date" class="info-value">06/20/2023</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon"><i class="fas fa-tag"></i></span>
+                            <strong>License Plate:</strong> 
+                            <span id="license-plate" class="info-value">A B C 1234</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon"><i class="fas fa-money-bill-wave"></i></span>
+                            <strong>Total Price:</strong> 
+                            <span id="total-price" class="info-value">750 SAR</span>
+                        </div>
+                        <div class="rental-actions">
+                            <button class="btn btn-extend"><i class="fas fa-calendar-plus"></i> Extend Rental</button>
+                            <button class="btn btn-cancel"><i class="fas fa-times-circle"></i> Cancel Booking</button>
+                        </div>
+                    </div>
+                    <div id="no-rental" style="display: none;">
+                        <p class="no-data-message">No current car bookings</p>
+                        <button class="btn btn-primary"><i class="fas fa-car"></i> Book a Car Now</button>
+                    </div>
+                </section>
+                <!-- Previous Bookings History -->
+                <section class="profile-section">
+                    <div class="section-header">
+                        <i class="fas fa-history"></i>
+                        <h2>Booking History</h2>
+                    </div>
+                    <div class="history-list">
+                        <div class="history-item">
+                            <div class="history-car">Toyota Land Cruiser 2022</div>
+                            <div class="history-dates">05/01/2023 - 05/05/2023</div>
+                            <div class="history-status completed">Completed</div>
+                            <button class="btn btn-small"><i class="fas fa-redo"></i> Rebook</button>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-car">Hyundai Sonata 2021</div>
+                            <div class="history-dates">04/10/2023 - 04/15/2023</div>
+                            <div class="history-status completed">Completed</div>
+                            <button class="btn btn-small"><i class="fas fa-redo"></i> Rebook</button>
+                        </div>
+                    </div>
+                </section>
+                <!-- Maintenance Services -->
+                <section class="profile-section">
+                    <div class="section-header">
+                        <i class="fas fa-tools"></i>
+                        <h2>Maintenance Records</h2>
+                    </div>
+                    <div class="service-list">
+                        <div class="service-item">
+                            <div class="service-type">Routine Maintenance</div>
+                            <div class="service-date">05/20/2023</div>
+                            <div class="service-car">Toyota Camry</div>
+                            <div class="service-status completed">Completed</div>
+                        </div>
+                        <div class="service-item">
+                            <div class="service-type">Oil Change</div>
+                            <div class="service-date">03/15/2023</div>
+                            <div class="service-car">Hyundai Sonata</div>
+                            <div class="service-status completed">Completed</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary"><i class="fas fa-calendar-alt"></i> Schedule Maintenance</button>
+                </section>
+            </div>
+            <footer class="profile-footer">
+                <button id="edit-profile-button" class="btn btn-primary">
+                    <i class="fas fa-user-edit"></i> Edit Profile
+                </button>
+                <button id="change-password-button" class="btn btn-secondary">
+                    <i class="fas fa-lock"></i> Change Password
+                </button>
+                <button id="logout-button" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </footer>
+        </div>
+    </form>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // You can add JavaScript code here to fetch data from the server
+            // Example:
+            /*
+            fetch('get_profile_data.php')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('customer-name').textContent = data.name;
+                    document.getElementById('name').textContent = data.name;
+                    // ... and so on for other fields
+                });
+            */
+            // Check for current rental existence
+            const hasCurrentRental = true; // Replace with actual data check
+            if (!hasCurrentRental) {
+                document.getElementById('current-rental').style.display = 'none';
+                document.getElementById('no-rental').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
