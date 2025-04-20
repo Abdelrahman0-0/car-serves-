@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Remove Car" content="width=device-width, initial-scale=1.0">
+    <title>Remove Car</title>
+    <link rel="stylesheet" href="styleadd.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-box">
+            <h2>Remove Car</h2>
+            <form action="remove_car.php" method="POST">
+                <div class="input-group">
+                    <label for="model">Car Model</label>
+                    <input type="text" id="model" name="model" placeholder="Enter car model" required>
+                </div>
+                <div class="input-group">
+                    <label for="plateID">Plate ID</label>
+                    <input type="text" id="plateID" name="plateID" placeholder="Enter car plate ID" required>
+                </div>
+                <div class="input-group">
+                    <label for="year">Manufacture Year</label>
+                    <input type="number" id="year" name="year" placeholder="Enter manufacture year" required>
+                </div>
+                <button id="home-button">العودة إلى الصفحة الرئيسية</button>
+                <button type="submit" class="submit-btn">Remove Car</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const homeButton = document.getElementById('home-button');
+        homeButton.addEventListener('click', function () {
+            window.location.href = 'Admin Dashboard.html'; // التأكد من اسم الصفحة الرئيسية الصحيح
+        });
+    </script>
+</body>
+</html>
