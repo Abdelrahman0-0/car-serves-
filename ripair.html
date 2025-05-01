@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Sales & Repair Services</title>
+  <style>
+    :root {
+      --primary-color: #1b2a49;
+      --secondary-color: #2c3e50;
+      --accent-color: #27ae60;
+      --danger-color: #c0392b;
+      --text-light: #ffffff;
+      --text-dark: #333333;
+      --nav-color: #34495e;
+      --card-bg: #ffffff;
+      --shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Tahoma', sans-serif;
+      background-color: var(--primary-color);
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+    
+    header {
+      background-color: var(--secondary-color);
+      color: var(--text-light);
+      padding: 15px 0;
+      text-align: center;
+      position: relative;
+      box-shadow: var(--shadow);
+    }
+    
+    .search-container {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+    }
+    
+    .search-container input[type="text"] {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      color: var(--text-dark);
+      width: 200px;
+      transition: width 0.3s ease;
+    }
+    
+    .search-container input[type="text"]:focus {
+      width: 250px;
+      outline: 2px solid var(--accent-color);
+    }
+    
+    .cart-icon {
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .cart-icon:hover {
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    .cart-count {
+      background-color: var(--danger-color);
+      border-radius: 50%;
+      padding: 3px 7px;
+      font-size: 0.75rem;
+      position: absolute;
+      top: -10px;
+      right: -10px;
+    }
+    
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: var(--nav-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    nav a {
+      color: var(--text-light);
+      padding: 15px 25px;
+      text-decoration: none;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+    }
+    
+    nav a:hover {
+      background-color: var(--secondary-color);
+    }
+    
+    section {
+      padding: 30px;
+      display: none;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    section.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--text-light);
+      font-size: 2rem;
+    }
+    
+    h3 {
+      color: var(--secondary-color);
+      margin: 15px 0;
+    }
+    
+    .cars-container, 
+    .repair-container, 
+    .recommend-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+    
+    .car, 
+    .repair-box, 
+    .recommend-box {
+      background: var(--card-bg);
+      color: var(--text-dark);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    
+    .car:hover, 
+    .repair-box:hover, 
+    .recommend-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .car img, 
+    .repair-box img, 
+    .recommend-box img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .car p, 
+    .repair-box p, 
+    .recommend-box p {
+      margin: 0 15px 15px;
+      color: #666;
+    }
+    
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      background-color: var(--accent-color);
+      color: var(--text-light);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    button:hover {
+      background-color: #219150;
+      transform: translateY(-2px);
+    }
+    
+    form {
+      max-width: 500px;
+      margin: 30px auto;
+      background: var(--card-bg);
+      color: var(--text-dark);
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+    }
+    
+    form input, 
+    form textarea, 
+    form select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-family: inherit;
+      transition: border 0.3s ease;
+    }
+    
+    form input:focus, 
+    form textarea:focus, 
+    form select:focus {
+      border-color: var(--accent-color);
+      outline: none;
+    }
+    
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    
+    #cart {
+      background-color: var(--card-bg);
+      color: var(--text-dark);
+      padding: 25px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: 20px auto;
+      box-shadow: var(--shadow);
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+      display: none;
+    }
+    
+    #cart h2 {
+      color: var(--secondary-color);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .cart-item button {
+      background-color: var(--danger-color);
+      padding: 5px 10px;
+      margin: 0;
+    }
+    
+    .cart-item button:hover {
+      background-color: #a5281b;
+    }
+    
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      display: none;
+    }
+    
+    #repair-form {
+      display: none;
+      margin-top: 20px;
+    }
+    
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .search-container {
+        position: static;
+        transform: none;
+        margin: 10px 0;
+      }
+      
+      .search-container input[type="text"] {
+        width: 100%;
+      }
+      
+      .cart-icon {
+        position: static;
+        transform: none;
+        display: inline-block;
+        margin: 10px 0;
+      }
+      
+      header {
+        padding: 15px;
+      }
+      
+      section {
+        padding: 20px 15px;
+      }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="search-container">
+      <input type="text" placeholder="Search services...">
+    </div>
+    <h1>AutoCare Services</h1>
+    <div class="cart-icon" onclick="toggleCart()">
+      🛒<span class="cart-count" id="cart-count">0</span>
+    </div>
+  </header>
+  
+  <nav>
+    <a href="#" onclick="showSection('repair')">Car Repair</a>
+    <a href="#" onclick="showSection('recommend')">Recommendations</a>
+  </nav>
+  
+  <main>
+    <section id="repair" class="active">
+      <h2>Professional Repair Services</h2>
+      <div class="repair-container">
+        <div class="repair-box" onclick="toggleRepairForm()">
+          <img src="img/mechanical.jpg" alt="Mechanical Repair">
+          <h3>Mechanical Services</h3>
+          <p>Engine, transmission, brakes, and suspension repairs</p>
+        </div>
+        <div class="repair-box" onclick="toggleRepairForm()">
+          <img src="img/electrical.jpg" alt="Electrical Repair">
+          <h3>Electrical Services</h3>
+          <p>Battery, wiring, lighting, and computer diagnostics</p>
+        </div>
+        <div class="repair-box" onclick="toggleRepairForm()">
+          <img src="img/bodypaint.jpg" alt="Body Repair">
+          <h3>Body & Paint</h3>
+          <p>Dent removal, scratch repair, and full paint jobs</p>
+        </div>
+        <div class="repair-box" onclick="toggleRepairForm()">
+          <img src="img/maintenance.jpg" alt="Maintenance">
+          <h3>Maintenance Services</h3>
+          <p>Oil changes, filters, fluids, and regular check-ups</p>
+        </div>
+      </div>
+      
+      <h3 style="text-align: center; margin: 30px 0 20px;">Book a Repair Appointment</h3>
+      <form id="repair-form">
+        <input type="text" placeholder="Full Name" required>
+        <input type="tel" placeholder="Phone Number" required>
+        <input type="email" placeholder="Email Address">
+        <input type="text" placeholder="Car Make & Model" required>
+        <select required>
+          <option value="">Select Service Type</option>
+          <option value="mechanical">Mechanical</option>
+          <option value="electrical">Electrical</option>
+          <option value="body">Body & Paint</option>
+          <option value="maintenance">Maintenance</option>
+          <option value="other">Other</option>
+        </select>
+        <textarea placeholder="Describe the issue or required service" rows="4" required></textarea>
+        <button type="submit">Submit Request</button>
+      </form>
+    </section>
+
+    <section id="recommend">
+      <h2>Vehicle Recommendations</h2>
+      <div class="recommend-container">
+        <div class="recommend-box">
+          <img src="img/family.jpg" alt="Family Vehicles">
+          <h3>For Families</h3>
+          <p>Spacious, safe, and fuel-efficient vehicles with advanced safety features and ample cargo space.</p>
+          <button onclick="addToCart('Family Vehicle Consultation')">Get Advice</button>
+        </div>
+        <div class="recommend-box">
+          <img src="img/business.jpg" alt="Executive Vehicles">
+          <h3>For Business Professionals</h3>
+          <p>Luxury sedans with premium features, comfortable interiors, and sophisticated styling.</p>
+          <button onclick="addToCart('Business Vehicle Consultation')">Get Advice</button>
+        </div>
+        <div class="recommend-box">
+          <img src="img/young.jpg" alt="Young Drivers">
+          <h3>For Young Drivers</h3>
+          <p>Affordable, tech-savvy, and economical cars with modern safety features.</p>
+          <button onclick="addToCart('Young Driver Consultation')">Get Advice</button>
+        </div>
+        <div class="recommend-box">
+          <img src="img/offroad.jpg" alt="Off-Road Vehicles">
+          <h3>For Adventure Seekers</h3>
+          <p>Rugged 4x4 vehicles with high ground clearance, powerful engines, and durable builds.</p>
+          <button onclick="addToCart('Adventure Vehicle Consultation')">Get Advice</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="overlay" onclick="toggleCart()"></div>
+  <div id="cart">
+    <h2>Your Service Cart</h2>
+    <div id="cart-items"></div>
+    <button onclick="checkout()" style="width: 100%; margin: 15px 0 0; padding: 12px;">Proceed to Checkout</button>
+  </div>
+
+  <script>
+    // Show initial section
+    document.addEventListener('DOMContentLoaded', function() {
+      showSection('repair');
+    });
+
+    function showSection(id) {
+      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      
+      // Scroll to top smoothly
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    const cartItems = [];
+    
+    function addToCart(item) {
+      cartItems.push(item);
+      renderCart();
+      showNotification(`${item} added to cart`);
+    }
+
+    function removeFromCart(index) {
+      const removedItem = cartItems.splice(index, 1);
+      renderCart();
+      showNotification(`${removedItem} removed from cart`);
+    }
+
+    function toggleCart() {
+      const cart = document.getElementById("cart");
+      const overlay = document.getElementById("overlay");
+      
+      if (cart.style.display === "none" || !cart.style.display) {
+        cart.style.display = "block";
+        overlay.style.display = "block";
+        document.body.style.overflow = "hidden";
+      } else {
+        cart.style.display = "none";
+        overlay.style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+    }
+
+    function renderCart() {
+      const cartContainer = document.getElementById("cart-items");
+      const cartCount = document.getElementById("cart-count");
+      
+      cartContainer.innerHTML = "";
+      
+      if (cartItems.length === 0) {
+        cartContainer.innerHTML = "<p>Your cart is empty</p>";
+      } else {
+        cartItems.forEach((item, index) => {
+          const cartItem = document.createElement("div");
+          cartItem.className = "cart-item";
+          cartItem.innerHTML = `
+            <span>${item}</span>
+            <button onclick="removeFromCart(${index})">Remove</button>
+          `;
+          cartContainer.appendChild(cartItem);
+        });
+      }
+      
+      cartCount.textContent = cartItems.length;
+    }
+
+    function toggleRepairForm() {
+      const repairForm = document.getElementById("repair-form");
+      repairForm.style.display = repairForm.style.display === "none" ? "block" : "none";
+      
+      if (repairForm.style.display === "block") {
+        repairForm.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    
+    function checkout() {
+      if (cartItems.length === 0) {
+        showNotification("Your cart is empty", "error");
+        return;
+      }
+      
+      showNotification("Checkout completed successfully!", "success");
+      cartItems.length = 0;
+      renderCart();
+      toggleCart();
+    }
+    
+    function showNotification(message, type = "success") {
+      const notification = document.createElement("div");
+      notification.className = `notification ${type}`;
+      notification.textContent = message;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.classList.add("fade-out");
+        setTimeout(() => {
+          notification.remove();
+        }, 500);
+      }, 3000);
+    }
+
+    // Form submission
+    document.getElementById("repair-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      showNotification("Your repair request has been submitted successfully!");
+      this.reset();
+      this.style.display = "none";
+    });
+  </script>
+  
+  <style>
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      background-color: #27ae60;
+      color: white;
+      border-radius: 5px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      animation: slideIn 0.5s ease;
+    }
+    
+    .notification.error {
+      background-color: #c0392b;
+    }
+    
+    .fade-out {
+      animation: fadeOut 0.5s ease forwards;
+    }
+    
+    @keyframes slideIn {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+    
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+  </style>
+</body>
+</html>
