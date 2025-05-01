@@ -1,0 +1,74 @@
+-- إنشاء قاعدة البيانات
+CREATE DATABASE Rental;
+USE Rental;
+
+-- إنشاء جدول المكاتب
+CREATE TABLE Office (
+    OfficeID INT PRIMARY KEY AUTO_INCREMENT,
+    Location VARCHAR(255) NOT NULL,
+    Phone VARCHAR(15) NOT NULL
+) ENGINE=InnoDB;
+
+-- إنشاء جدول السيارات
+CREATE TABLE Car (
+    CarID INT PRIMARY KEY AUTO_INCREMENT,
+    CarName VARCHAR(50) NOT NULL,
+    Model VARCHAR(50) NOT NULL,
+    Year INT NOT NULL,
+    Price VARCHAR(50) NULL,
+    PlateID VARCHAR(20) UNIQUE NOT NULL,
+    Status ENUM('active', 'out of service', 'rented') NOT NULL,
+    OfficeID INT,
+    FOREIGN KEY (OfficeID) REFERENCES Office(OfficeID) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- إنشاء جدول العملاء مع الأعمدة الجديدة
+CREATE TABLE Customer (
+    CustomerID INT PRIMARY KEY AUTO_INCREMENT,  -- عمود CustomerID هو المفتاح الأساسي وAUTO_INCREMENT
+    Name VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) UNIQUE NOT NULL,
+    Phone VARCHAR(15) NOT NULL,
+    Address TEXT,
+    password VARCHAR(255) NOT NULL  -- إضافة عمود كلمة المرور
+) ENGINE=InnoDB;
+
+-- إضافة فهرس على عمود "email" في جدول العملاء
+CREATE INDEX Indexemail ON Customer(email);
+
+-- إنشاء جدول الحجوزات
+CREATE TABLE Reservation (
+    ReservationID INT PRIMARY KEY AUTO_INCREMENT,
+    CustomerID INT NOT NULL,
+    CarID INT NOT NULL,
+    StartDate DATE NOT NULL,
+    EndDate DATE NOT NULL,
+    TotalCost DECIMAL(10, 2) NOT NULL,
+    Status ENUM('Reserved', 'Picked Up', 'Returned') NOT NULL,
+    FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID) ON DELETE CASCADE,
+    FOREIGN KEY (CarID) REFERENCES Car(CarID) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- إنشاء جدول المدفوعات
+CREATE TABLE Payment (
+    PaymentID INT PRIMARY KEY AUTO_INCREMENT,
+    ReservationID INT NOT NULL,
+    Amount DECIMAL(10, 2) NOT NULL,
+    PaymentDate DATE NOT NULL,
+    ADD CardNumber VARCHAR(255) NULL,
+    ADD PayPalAccount VARCHAR(255) NULL,
+    ADD BankAccount VARCHAR(255) NULL,
+    PaymentMethod ENUM('Credit Card', 'Cash', 'Other') NOT NULL,
+    FOREIGN KEY (ReservationID) REFERENCES Reservation(ReservationID) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- إنشاء جدول الإدارة (Admin)
+CREATE TABLE Admin (
+    AdminID INT PRIMARY KEY AUTO_INCREMENT,  -- عمود AdminID هو المفتاح الأساسي وAUTO_INCREMENT
+    Name VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) UNIQUE NOT NULL,
+    Password VARCHAR(255) NOT NULL,  -- إضافة عمود كلمة المرور
+    Role ENUM('superadmin', 'admin') NOT NULL  -- إضافة عمود لتحديد نوع الدور (مشرف أو مدير)
+) ENGINE=InnoDB;
+
+-- إضافة فهرس على عمود "email" في جدول الإدارة
+CREATE INDEX IndexAdminEmail ON Admin(Email);
