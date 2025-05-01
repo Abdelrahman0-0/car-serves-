@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Car Rental</title>
+    <link rel="stylesheet" href="style_admin.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Car Rental Co. - Admin Dashboard</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="add-admin.html">Add Admin</a></li>
+                <li><a href="#manage">Manage</a></li>
+                <li><a href="#reports">Reports</a></li>
+                <li><a href="offices.html">Offices</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- إحصائيات الموقع -->
+        <section id="statistics">
+            <h2>Dashboard Statistics</h2>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <h3>Total Reservations</h3>
+                    <p>50</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Total Cars</h3>
+                    <p>25</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Total Payments</h3>
+                    <p>$15,000</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- إدارة العملاء والسيارات -->
+        <section id="manage">
+            <h2>Manage Cars & Customers</h2>
+            <div class="manage-container">
+                <div class="manage-box">
+                    <h3><a href="New Car Registration.html">Add Car</a></h3>
+                </div>
+                <div class="manage-box">
+                    <h3><a href="remove_car.html">Remove Car</a></h3>
+                </div>
+                <div class="manage-box">
+                    <h3><a href="data_base.html">Update Car</a></h3>
+                </div>
+                <div class="manage-box">
+                    <h3><a href="PROFITE.html">Profits</a></h3>
+                </div>
+                <div class="manage-box">
+                    <h3><a href="mange_customer.html">Customers</a></h3>
+                </div>
+                <div class="manage-box"></div>
+                    <h3><a href="data_car.html">Cars</a></h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- التقارير -->
+        <section id="reports">
+            <h2>View Reports</h2>
+            <div class="reports-container">
+                <div class="report-box">
+                    <h3><a href="Report_rental.html">Reservations Report</a></h3>
+                </div>
+                <div class="report-box">
+                    <h3><a href="status_car.html">Car Status Report</a></h3>
+                </div>
+                <div class="report-box">
+                    <h3><a href="Daily_Payments_Report.html">Payments Report</a></h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- تسجيل الخروج -->
+        <section id="logout">
+            <button onclick="window.location.href='login_admin.html';">Logout</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Car Rental Co. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

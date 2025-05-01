@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin & Users Management</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      background-color: #121212;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .sidebar {
+      background-color: #1a1a1a;
+      width: 250px;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding-top: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar a {
+      color: #aaa;
+      padding: 15px 20px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background-color: #333;
+      color: #00bcd4;
+    }
+
+    .sidebar i {
+      margin-right: 10px;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 20px;
+    }
+
+    .top-bar {
+      background-color: #1a1a1a;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #333;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #00bcd4;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #1e1e1e;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #444;
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #333;
+      color: #00bcd4;
+    }
+
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-status {
+      min-width: 80px;
+    }
+
+    .btn-status.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .btn-status.inactive {
+      background-color: #FFEB3B;
+      color: #000;
+    }
+
+    .btn-edit {
+      background-color: #2196F3;
+      color: white;
+    }
+
+    .btn-delete {
+      background-color: #f44336;
+      color: white;
+    }
+
+    .btn-view {
+      background-color: #9C27B0;
+      color: white;
+    }
+
+    .btn-add {
+      background-color: #00BCD4;
+      color: white;
+      padding: 8px 16px;
+      font-weight: bold;
+    }
+
+    .actions {
+      display: flex;
+      gap: 5px;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .modal-content {
+      background-color: #1e1e1e;
+      padding: 25px;
+      border-radius: 10px;
+      width: 450px;
+      max-width: 90%;
+      color: #fff;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #444;
+    }
+
+    .modal-title {
+      color: #00bcd4;
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .close-btn {
+      background-color: transparent;
+      color: #aaa;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .close-btn:hover {
+      color: #f44336;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #aaa;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      background-color: #333;
+      border: 1px solid #444;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #00bcd4;
+    }
+
+    .modal-footer {
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .btn-submit {
+      background-color: #00BCD4;
+      color: white;
+      padding: 10px 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn-submit:hover {
+      background-color: #008ba3;
+    }
+
+    .btn-cancel {
+      background-color: #666;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn-cancel:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <div class="sidebar-header text-center mb-4">
+        <h4><i class="fas fa-car"></i> Car Services</h4>
+    </div>
+    <a href="Admin_panal.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="data_Admin.html"><i class="fas fa-users"></i> Users</a>
+    <a href="orders.html"><i class="fas fa-shopping-cart"></i> Orders</a>
+    <a href="Analytics.html"><i class="fas fa-chart-line"></i> Analytics</a>
+    <a href="clints.html"><i class="fas fa-user-tie"></i> Clients</a>
+    <a href="reports.html"><i class="fas fa-clipboard-list"></i> Reports</a>
+    <a href="mange.html"><i class="fas fa-cogs"></i> Manage</a>
+    <a href="manage_car.html" class="active"><i class="fas fa-car"></i> Cars</a>
+    <a href="#logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+</div>
+
+  <div class="main-content">
+    <div class="top-bar">
+      <h1>Users Management</h1>
+      <button class="btn btn-add" onclick="openAddModal()">
+        <i class="fas fa-plus"></i> Add New User
+      </button>
+    </div>
+
+    <table id="userTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Registered At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Data will be added dynamically -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Add/Edit User Modal -->
+  <div class="modal" id="userModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Add New User</h3>
+        <button class="close-btn" onclick="closeModal('userModal')">&times;</button>
+      </div>
+      <form id="userForm">
+        <input type="hidden" id="editIndex">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" class="form-control" placeholder="Enter full name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" class="form-control" placeholder="Enter email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" class="form-control" placeholder="Enter password" required>
+        </div>
+        <div class="form-group">
+          <label for="role">Role</label>
+          <select id="role" class="form-control" required>
+            <option value="Admin">Admin</option>
+            <option value="User" selected>User</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-cancel" onclick="closeModal('userModal')">Cancel</button>
+          <button type="submit" class="btn-submit">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- View User Modal -->
+  <div class="modal" id="viewModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">User Details</h3>
+        <button class="close-btn" onclick="closeModal('viewModal')">&times;</button>
+      </div>
+      <div id="viewDetails" style="line-height: 1.8;"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn-cancel" onclick="closeModal('viewModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <script>
+    const userTable = document.querySelector("#userTable tbody");
+    const userForm = document.getElementById("userForm");
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const roleInput = document.getElementById("role");
+    const editIndexInput = document.getElementById("editIndex");
+    const modalTitle = document.getElementById("modalTitle");
+
+    let users = [];
+
+    function renderTable() {
+      userTable.innerHTML = "";
+      users.forEach((user, index) => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+          <td>#00${index + 1}</td>
+          <td>${user.name}</td>
+          <td>${user.email}</td>
+          <td>${user.role}</td>
+          <td>
+            <button class="btn btn-status ${user.status.toLowerCase()}" onclick="toggleStatus(${index})">
+              ${user.status}
+            </button>
+          </td>
+          <td>${user.date}</td>
+          <td class="actions">
+            <button class="btn btn-view" onclick="viewUser(${index})">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="btn btn-edit" onclick="editUser(${index})">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-delete" onclick="deleteUser(${index})">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        `;
+        userTable.appendChild(row);
+      });
+    }
+
+    function toggleStatus(index) {
+      users[index].status = users[index].status === "Active" ? "Inactive" : "Active";
+      renderTable();
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: `User status updated to ${users[index].status}`,
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+
+    function deleteUser(index) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#00bcd4',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          users.splice(index, 1);
+          renderTable();
+          Swal.fire(
+            'Deleted!',
+            'User has been deleted.',
+            'success'
+          );
+        }
+      });
+    }
+
+    function openAddModal() {
+      userForm.reset();
+      editIndexInput.value = "-1";
+      modalTitle.textContent = "Add New User";
+      document.getElementById("userModal").style.display = "flex";
+    }
+
+    function editUser(index) {
+      const user = users[index];
+      nameInput.value = user.name;
+      emailInput.value = user.email;
+      passwordInput.value = user.password;
+      roleInput.value = user.role;
+      editIndexInput.value = index;
+      modalTitle.textContent = "Edit User";
+      document.getElementById("userModal").style.display = "flex";
+    }
+
+    function viewUser(index) {
+      const user = users[index];
+      const isSuperAdmin = user.role === "Admin" ? "Yes (Super Admin)" : "No";
+      const details = `
+        <p><strong>Name:</strong> ${user.name}</p>
+        <p><strong>Email:</strong> ${user.email}</p>
+        <p><strong>Password:</strong> ********</p>
+        <p><strong>Role:</strong> ${user.role}</p>
+        <p><strong>Super Admin:</strong> ${isSuperAdmin}</p>
+        <p><strong>Status:</strong> ${user.status}</p>
+        <p><strong>Registered At:</strong> ${user.date}</p>
+      `;
+      document.getElementById("viewDetails").innerHTML = details;
+      document.getElementById("viewModal").style.display = "flex";
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = "none";
+    }
+
+    userForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const newUser = {
+        name: nameInput.value,
+        email: emailInput.value,
+        password: passwordInput.value,
+        role: roleInput.value,
+        status: "Active",
+        date: new Date().toISOString().split("T")[0]
+      };
+
+      const index = parseInt(editIndexInput.value);
+      
+      if (index === -1) {
+        users.push(newUser);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'User added successfully',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      } else {
+        users[index] = newUser;
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'User updated successfully',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+
+      userForm.reset();
+      closeModal('userModal');
+      renderTable();
+    });
+
+    // Default users
+    users = [
+      { name: "Roza", email: "roza@email.com", password: "roza@123", role: "Admin", status: "Active", date: "2024-06-01" },
+      { name: "Asmaa", email: "asmaa@email.com", password: "asmaa456", role: "User", status: "Inactive", date: "2024-06-03" }
+    ];
+
+    renderTable();
+  </script>
+</body>
+</html>
