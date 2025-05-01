@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8">
+    <title>صفحة الطلبات</title>
+    <style>
+      body {
+        background-color: #121212;
+        color: white;
+        font-family: 'Segoe UI', sans-serif;
+        padding: 20px;
+      }
+
+      h1 {
+        color: #4dd0e1;
+      }
+
+      .section {
+        background-color: #1e1e1e;
+        padding: 20px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+      }
+
+      label {
+        margin-top: 10px;
+        display: block;
+      }
+
+      select {
+        padding: 8px;
+        border-radius: 6px;
+        border: none;
+        width: 200px;
+        margin-bottom: 10px;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #00bcd4;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      th, td {
+        padding: 12px;
+        border-bottom: 1px solid #444;
+        text-align: center;
+      }
+
+      th {
+        background-color: #1f1f1f;
+      }
+
+      tr:hover {
+        background-color: #2a2a2a;
+      }
+
+      .status {
+        padding: 5px 10px;
+        border-radius: 8px;
+      }
+
+      .pending { background-color: orange; }
+      .completed { background-color: green; }
+      .canceled { background-color: red; }
+      .inprogress { background-color: blue; }
+    </style>
+  </head>
+  <body>
+
+    <h1>🧾 إدارة الطلبات</h1>
+
+    <!-- 🔍 فلترة الطلبات -->
+    <div class="section">
+      <label for="orderType">نوع الطلب:</label>
+      <select id="orderType">
+        <option value="all">الكل</option>
+        <option value="rental">تأجير</option>
+        <option value="sale">بيع</option>
+        <option value="buy">شراء</option>
+        <option value="repair">إصلاح</option>
+      </select>
+
+      <button onclick="عرض_الطلبات()">عرض الطلبات</button>
+    </div>
+
+    <!-- 📋 جدول الطلبات -->
+    <div class="section">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>نوع الطلب</th>
+            <th>العميل</th>
+            <th>السيارة</th>
+            <th>التاريخ</th>
+            <th>السعر</th>
+            <th>الحالة</th>
+            <th>إجراءات</th>
+          </tr>
+        </thead>
+        <tbody id="ordersTable">
+          <!-- الصفوف تظهر هنا -->
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      const الطلبات = [
+        { id: 1, type: "تأجير", client: "أحمد", car: "تويوتا كورولا", date: "2025-04-10", price: 1000, status: "مكتمل" },
+        { id: 2, type: "إصلاح", client: "-", car: "نيسان صني", date: "2025-04-09", price: 500, status: "جاري" },
+        { id: 3, type: "بيع", client: "سارة", car: "هيونداي النترا", date: "2025-04-08", price: 15000, status: "ملغي" },
+        { id: 4, type: "شراء", client: "محمود", car: "شيفروليه كروز", date: "2025-04-07", price: 120000, status: "مكتمل" },
+      ];
+
+      function عرض_الطلبات() {
+        const نوع = document.getElementById("orderType").value;
+
+        const tbody = document.getElementById("ordersTable");
+        tbody.innerHTML = ""; // إفراغ الجدول قبل إعادة عرضه
+
+        الطلبات.forEach((طلب) => {
+          // التأكد من التصفية بناءً على نوع الطلب المحدد
+          if (نوع === "all" || الطلب_يوافق(طلب.type, نوع)) {
+            const row = document.createElement("tr");
+            // تحقق من أن العميل متاح في حالة الإصلاح أو البيع
+            const client = (طلب.client === "-" || !طلب.client) ? "غير محدد" : طلب.client;
+            row.innerHTML = `
+              <td>${طلب.id}</td>
+              <td>${طلب.type}</td>
+              <td>${client}</td>
+              <td>${طلب.car}</td>
+              <td>${طلب.date}</td>
+              <td>${طلب.price} ج.م</td>
+              <td><span class="status ${لون_الحالة(طلب.status)}">${طلب.status}</span></td>
+              <td><button>عرض</button></td>
+            `;
+            tbody.appendChild(row);
+          }
+        });
+      }
+
+      function الطلب_يوافق(typeArabic, typeEnglish) {
+        const map = {
+          "تأجير": "rental",
+          "بيع": "sale",
+          "شراء": "buy",  // تأكد من أن "شراء" موجود هنا
+          "إصلاح": "repair"
+        };
+        return map[typeArabic] === typeEnglish;
+      }
+
+      function لون_الحالة(status) {
+        if (status === "مكتمل") return "completed";
+        if (status === "ملغي") return "canceled";
+        if (status === "جاري") return "inprogress";
+        return "pending";
+      }
+
+      // عرض تلقائي عند الفتح
+      عرض_الطلبات();
+    </script>
+
+  </body>
+</html>

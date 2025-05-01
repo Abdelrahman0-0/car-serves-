@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Purchase Request Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0a1931;
+            color: #fff;
+            padding: 20px;
+        }
+        form {
+            background-color: #fff;
+            color: #000;
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 0 15px rgba(255,255,255,0.1);
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <form action="submit_form.php" method="post">
+        <h2>Car Purchase Request</h2>
+
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="e.g. +201234567890" required>
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com">
+
+        <label for="address">Your Address</label>
+        <input type="text" id="address" name="address" placeholder="City, Street, Building Number">
+
+        <label for="car_model">Car Model</label>
+        <input type="text" id="car_model" name="car_model" placeholder="e.g. Toyota Corolla" required>
+
+        <label for="car_type">Car Type</label>
+        <select id="car_type" name="car_type" required>
+            <option value="">-- Select Type --</option>
+            <option value="sedan">Sedan</option>
+            <option value="suv">SUV</option>
+            <option value="hatchback">Hatchback</option>
+            <option value="pickup">Pickup</option>
+            <option value="coupe">Coupe</option>
+            <option value="van">Van</option>
+        </select>
+
+        <label for="condition">Condition</label>
+        <select id="condition" name="condition" required>
+            <option value="">-- New or Used? --</option>
+            <option value="new">New</option>
+            <option value="used">Used</option>
+        </select>
+
+        <label for="year">Model Year</label>
+        <input type="number" id="year" name="year" min="1990" max="2025" placeholder="e.g. 2023">
+
+        <label for="notes">Additional Notes</label>
+        <textarea id="notes" name="notes" rows="4" placeholder="Write anything specific you're looking for..."></textarea>
+
+        <button type="submit">Submit Request</button>
+    </form>
+
+</body>
+</html>
+

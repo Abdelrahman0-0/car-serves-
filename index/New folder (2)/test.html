@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>UI Interaction</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f9f9f9;
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #4CAF50, #81C784);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+        
+        button:hover {
+            background: linear-gradient(135deg, #388E3C, #66BB6A);
+        }
+        
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            width: 250px;
+            font-size: 16px;
+        }
+        
+        .toggle-box {
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: all 0.5s ease;
+            padding: 0 10px;
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        
+        .toggle-box.show {
+            max-height: 300px;
+            opacity: 1;
+            padding: 10px;
+        }
+        /* === Popup Style === */
+        
+        .popup {
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border: 2px solid #4CAF50;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            display: none;
+            text-align: center;
+        }
+        
+        .popup.show {
+            display: block;
+        }
+        
+        .popup h3 {
+            margin: 0;
+            font-size: 20px;
+        }
+        
+        .popup button {
+            background: crimson;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        const body = document.body;
+
+        // === Top Section ===
+        const topSection = document.createElement('div');
+        topSection.className = 'section';
+
+        const usernameInput = document.createElement('input');
+        usernameInput.type = 'text';
+        usernameInput.placeholder = 'Enter your username';
+
+        const loginBtn = document.createElement('button');
+        loginBtn.textContent = 'Login';
+
+        topSection.appendChild(usernameInput);
+        topSection.appendChild(loginBtn);
+        body.appendChild(topSection);
+
+        // === Bottom Section ===
+        const bottomSection = document.createElement('div');
+        bottomSection.className = 'section';
+
+        const buttonGroup = document.createElement('div');
+        buttonGroup.className = 'button-group';
+
+        const menuBtn = document.createElement('button');
+        menuBtn.textContent = 'Show/Hide Menu';
+
+        const detailsBtn = document.createElement('button');
+        detailsBtn.textContent = 'Show Details';
+
+        buttonGroup.appendChild(menuBtn);
+        buttonGroup.appendChild(detailsBtn);
+        bottomSection.appendChild(buttonGroup);
+        body.appendChild(bottomSection);
+
+        // === Menu and Details ===
+        const navMenu = document.createElement('div');
+        navMenu.className = 'toggle-box';
+        navMenu.innerHTML = `
+            <p>🏠 Home</p>
+            <p>📄 About</p>
+            <p>📞 Contact</p>
+        `;
+
+        const details = document.createElement('div');
+        details.className = 'toggle-box';
+        details.innerHTML = '<p>Here are some additional details that appear when you click the button.</p>';
+
+        body.appendChild(navMenu);
+        body.appendChild(details);
+
+        // === Popup ===
+        const popup = document.createElement('div');
+        popup.className = 'popup';
+
+        const popupText = document.createElement('h3');
+        popup.appendChild(popupText);
+
+        const popupClose = document.createElement('button');
+        popupClose.textContent = 'Close';
+        popupClose.onclick = () => {
+            popup.classList.remove('show');
+        };
+        popup.appendChild(popupClose);
+
+        body.appendChild(popup);
+
+        // === Events ===
+        menuBtn.onclick = () => {
+            navMenu.classList.toggle('show');
+        };
+
+        detailsBtn.onclick = () => {
+            details.classList.toggle('show');
+        };
+
+        loginBtn.onclick = () => {
+            const username = usernameInput.value.trim();
+            if (username) {
+                popupText.textContent = `Welcome, ${username}!`;
+                popupText.style.color = '#388E3C';
+            } else {
+                popupText.textContent = 'Please enter your username.';
+                popupText.style.color = 'crimson';
+            }
+            popup.classList.add('show');
+        };
+    </script>
+</body>
+
+</html>
