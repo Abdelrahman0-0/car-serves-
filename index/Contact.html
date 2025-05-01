@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact & About</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #2c3e50;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            max-width: 1000px;
+            width: 100%;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            flex: 1 1 300px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        input, textarea {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1em;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+            scale: 1.05;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+        }
+    .section a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .section a:hover {
+        text-decoration: underline;
+    }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- About Section -->
+    <div class="section">
+        <h2>About Us</h2>
+        <p>
+            Welcome to our website! We are passionate about delivering great services and connecting with our users. 
+            This project was built with care and attention to detail. Our goal is to make your experience as smooth 
+            and useful as possible.
+        </p>
+        <p>
+            Whether you're here to learn, collaborate, or explore, we're glad to have you with us. 
+            Feel free to reach out anytime — we love hearing from you!
+        </p>
+    </div>
+
+    <!-- Contact Form Section -->
+    <div class="section">
+        <h2>Contact Us</h2>
+        <form method="post" action="">
+            <label for="contact-name">Name</label>
+            <input type="text" id="contact-name" name="name" required>
+    
+            <label for="contact-email">Email</label>
+            <input type="email" id="contact-email" name="email" required>
+    
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+    
+            <button type="submit">Send Message</button>
+        </form>
+    
+        <!-- Contact Links -->
+        <div style="margin-top: 30px;">
+            <p><strong>Email:</strong> <a href="mailto:you@example.com">you@example.com</a></p>
+            <p><strong>Phone:</strong> <a href="tel:+1234567890">+20 102 456 7890</a></p>
+            <p><strong>Website:</strong> <a href="https://www.yourwebsite.com" target="_blank">www.yourwebsite.com</a></p>
+        </div>
+    </div>    
+</div>
+
+</body>
+</html>
