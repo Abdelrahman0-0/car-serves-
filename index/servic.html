@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Comprehensive Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #2c3e50; 
+            color: #ecf0f1; 
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 38px;
+            color: #ecdbba;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+        .card {
+            background-color: #34495e;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            z-index: 0;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(145deg, rgba(26, 188, 156, 0.2), rgba(46, 204, 113, 0.1));
+            z-index: -1;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        .card:hover::before {
+            opacity: 1;
+        }
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 2px solid #1abc9c;
+        }
+        .card-content {
+            padding: 20px;
+        }
+        .card-content h3 {
+            font-size: 22px;
+            color: #ecdbba;
+            margin-bottom: 15px;
+        }
+        .card-content p {
+            font-size: 16px;
+            color: #bdc3c7;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .card-content a {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #1abc9c;
+            color: #ecf0f1;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+        .card-content a:hover {
+            background-color: #16a085;
+            transform: scale(1.05);
+        }
+        
+        /* Search Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        .modal-content {
+            background-color: #34495e;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 800px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: #ecf0f1;
+        }
+        .search-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .search-form input, .search-form select {
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #1abc9c;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            font-size: 16px;
+        }
+        .search-form button {
+            grid-column: span 2;
+            padding: 12px;
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .search-form button:hover {
+            background-color: #16a085;
+        }
+        .search-results {
+            margin-top: 20px;
+        }
+        .car-item {
+            background-color: #2c3e50;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .car-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .car-info {
+            flex: 1;
+        }
+        .car-status {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .available {
+            background-color: #27ae60;
+        }
+        .unavailable {
+            background-color: #e74c3c;
+        }
+        .book-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        .book-btn:hover {
+            background-color: #2980b9;
+        }
+        .car-details {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #34495e;
+        }
+        
+   /* Improved Dialog Styles */
+   dialog {
+    background-color: #34495e;
+    color: #ecf0f1;
+    border: none;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    width: 90%;
+    max-width: 700px;
+    border: 1px solid #1abc9c;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0; /* إزالة أي هوامش سابقة */
+}
+    
+    dialog h3 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #ecdbba;
+        font-size: 24px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+    
+    dialog h3::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 25%;
+        width: 50%;
+        height: 2px;
+        background: linear-gradient(to right, transparent, #1abc9c, transparent);
+    }
+    
+    .form-columns {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .form-column {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .form-group.full-width {
+        width: 100%;
+    }
+    
+    dialog label {
+        font-weight: 500;
+        color: #bdc3c7;
+        font-size: 14px;
+    }
+    
+    dialog input, dialog select {
+        width: 100%;
+        padding: 12px 15px;
+        border-radius: 8px;
+        border: 1px solid #2c3e50;
+        background-color: #2c3e50;
+        color: #ecf0f1;
+        font-size: 15px;
+        transition: all 0.3s ease;
+    }
+    
+    dialog input:focus, dialog select:focus {
+        border-color: #1abc9c;
+        box-shadow: 0 0 0 2px rgba(26, 188, 156, 0.2);
+        outline: none;
+    }
+    
+    .file-upload {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .file-upload input[type="file"] {
+        display: none;
+    }
+    
+    .file-info {
+        flex: 1;
+        padding: 10px;
+        background-color: #2c3e50;
+        border-radius: 8px;
+        border: 1px dashed #1abc9c;
+        color: #bdc3c7;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .browse-btn {
+        padding: 10px 15px;
+        background-color: #1abc9c;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s;
+    }
+    
+    .browse-btn:hover {
+        background-color: #16a085;
+    }
+    
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 25px;
+        gap: 15px;
+    }
+    
+    .submit-btn, .cancel-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .submit-btn {
+        background-color: #1abc9c;
+        color: white;
+    }
+    
+    .submit-btn:hover {
+        background-color: #16a085;
+        transform: translateY(-2px);
+    }
+    
+    .cancel-btn {
+        background-color: transparent;
+        color: #e74c3c;
+        border: 1px solid #e74c3c;
+    }
+    
+    .cancel-btn:hover {
+        background-color: rgba(231, 76, 60, 0.1);
+    }
+    
+    @media (max-width: 768px) {
+        .form-columns {
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        dialog {
+            padding: 20px;
+            width: 95%;
+        }
+        
+        .form-actions {
+            flex-direction: column;
+        }
+        
+        .submit-btn, .cancel-btn {
+            justify-content: center;
+        }
+    }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 28px;
+            }
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+            .search-form button {
+                grid-column: span 1;
+            }
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+            .car-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .car-status {
+                margin-top: 5px;
+            }
+            
+            dialog {
+                width: 95%;
+                padding: 20px;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+        .logo1 {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001; /* لجعل الشعار فوق شريط التنقل */
+    display: flex;
+    align-items: center; /* إضافة هذه الخاصية لجعل الشعار فوق العناصر الأخرى */
+}
+.logo1 img {
+    width: 70px;
+    height: auto;
+    border-radius: 100px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.dropdown-menu {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    display: none;
+    position: absolute;
+    font-weight: bold;
+    top: 100%;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    z-index: 1000;
+}
+.dropdown-menu li {
+    padding: 10px 20px;
+}
+
+.dropdown-menu li a {
+    color: #bdc3c7;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #557770;
+}
+
+.logo1:hover .dropdown-menu {
+    display: block;
+}
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo1">
+            <img src="img/logo.png" alt="Car Rental Logo">
+            <ul class="dropdown-menu">
+                <li><a href="feedBack.html" onclick="showSection('services')">Feedback</a></li>
+                <li><a href="index.html" onclick="showSection('services')">Home</a></li>
+
+                <li><a href="servic.html" onclick="showSection('services')">Services</a></li>
+                <li><a href="About.html" onclick="showSection('contact')">Contact</a></li>
+                <li><a href="login.html" id="auth-link">Logout</a></li>
+            </ul>
+        </div>
+    </header>
+    <h1>Our Services</h1>
+    <div class="container">
+        <div class="card">
+            <img src="img/im_7.jpg" alt="Car rental service">
+            <div class="card-content">
+                <h3>Rental Service</h3>
+                <p>We offer competitive car rental services with a variety of options to suit all your needs.</p>
+                <a onclick="openSearchModal()">Get Started</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="img/images.png" alt="Car sales service">
+            <div class="card-content">
+                <h3>Sales Service</h3>
+                <p>Discover our wide range of new and used cars available at the best market prices.</p>
+                <a id="salesServiceBtn" href="#">Get Started</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="img/pngtree-car-seller-deals-buying-and-sale-flat-illustration-png-image_5426832.jpg" alt="Car purchase service">
+            <div class="card-content">
+                <h3>Purchase Service</h3>
+                <p>Let us help you find the perfect vehicle that fits both your budget and expectations.</p>
+                <a >Get Started</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="img/download.jpeg" alt="Car maintenance service">
+            <div class="card-content">
+                <h3>Repair Service</h3>
+                <p>Our team of specialized technicians provides top-quality maintenance and repair services.</p>
+                <a href="ripair.html#">Get Started</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div id="searchModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSearchModal()">&times;</span>
+            <h2>Search Available Cars</h2>
+            <form class="search-form" onsubmit="searchCars(event)">
+                <input type="text" id="carName" placeholder="Car Name (e.g., Toyota)" required>
+                <input type="text" id="carModel" placeholder="Model (e.g., Camry)" required>
+                <button type="submit">Search</button>
+            </form>
+            
+            <div class="search-results" id="searchResults">
+                <!-- Results will be displayed here -->
+            </div>
+        </div>
+    </div>
+    
+<!-- Sales Dialog -->
+<dialog id="salesDialog">
+    <form method="post" enctype="multipart/form-data">
+        <h3>Car Sales Form</h3>
+        
+        <div class="form-columns">
+            <div class="form-column">
+                <div class="form-group">
+                    <label for="salesEmail">Email</label>
+                    <input type="email" id="salesEmail" placeholder="example@gmail.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="salesPhone">Phone Number</label>
+                    <input type="tel" id="salesPhone" placeholder="011 2345 6225" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="salesName">Full Name</label>
+                    <input type="text" id="salesName" placeholder="Your Full Name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="salesAddress">Address</label>
+                    <input type="text" id="salesAddress" placeholder="Your Address" required>
+                </div>
+            </div>
+            
+            <div class="form-column">
+                <div class="form-group">
+                    <label for="salesCarModel">Car Model</label>
+                    <input type="text" id="salesCarModel" placeholder="Toyota Camry" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="salesYear">Manufacturing Year</label>
+                    <input type="number" id="salesYear" placeholder="2022" min="1990" max="2025" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="carCondition">Car Condition</label>
+                    <select id="carCondition" required>
+                        <option value="">Select Condition</option>
+                        <option value="excellent">Excellent</option>
+                        <option value="very_good">Very Good</option>
+                        <option value="good">Good</option>
+                        <option value="acceptable">Acceptable</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="carPrice">Asking Price (SAR)</label>
+                    <input type="number" id="carPrice" placeholder="50000" required>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group full-width">
+            <label for="carImage">Upload Car Photo</label>
+            <div class="file-upload">
+                <input type="file" id="carImage" accept="image/*" required>
+                <span class="file-info">No file selected</span>
+                <button type="button" class="browse-btn">Browse</button>
+            </div>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-paper-plane"></i> Submit Request
+            </button>
+            <button type="button" class="cancel-btn" onclick="closeSalesDialog()">
+                <i class="fas fa-times"></i> Cancel
+            </button>
+        </div>
+    </form>
+</dialog>
+<!-- Purchase Dialog - Updated Version -->
+<dialog id="purchaseDialog">
+    <form method="post" action="submit_purchase.php" enctype="multipart/form-data">
+        <h3>Car Purchase Request</h3>
+        
+        <div class="form-columns">
+            <div class="form-column">
+                <div class="form-group">
+                    <label for="purchaseName">Full Name</label>
+                    <input type="text" id="purchaseName" name="full_name" placeholder="Your Full Name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="purchasePhone">Phone Number</label>
+                    <input type="tel" id="purchasePhone" name="phone" placeholder="011 2345 6225" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="purchaseEmail">Email</label>
+                    <input type="email" id="purchaseEmail" name="email" placeholder="example@gmail.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="purchaseAddress">Address</label>
+                    <input type="text" id="purchaseAddress" name="address" placeholder="City, Street, Building" required>
+                </div>
+            </div>
+            
+            <div class="form-column">
+                <div class="form-group">
+                    <label for="carNamePurchase">Car Name</label>
+                    <input type="text" id="carNamePurchase" name="car_name" placeholder="e.g. Toyota" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="carModelPurchase">Car Model</label>
+                    <input type="text" id="carModelPurchase" name="car_model" placeholder="e.g. Camry" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="totalPricePurchase">Total Price (SAR)</label>
+                    <input type="number" id="totalPricePurchase" name="total_price" placeholder="50000" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="purchaseYear">Manufacturing Year</label>
+                    <input type="number" id="purchaseYear" name="year" min="1990" max="2025" placeholder="e.g. 2023">
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="submit-btn">
+                Submit Request
+            </button>
+            <button type="button" class="cancel-btn" onclick="closePurchaseDialog()">
+                Cancel
+            </button>
+        </div>
+    </form>
+</dialog>
+
+
+    <script>
+  // Purchase dialog functions
+  function openPurchaseDialog() {
+        let dialog = document.getElementById("purchaseDialog");
+        dialog.querySelector("form").reset();
+        dialog.showModal();
+    }
+
+    function closePurchaseDialog() {
+        document.getElementById("purchaseDialog").close();
+    }
+
+    // Add event listener to purchase service button (3rd card)
+    document.querySelector(".container .card:nth-child(3) a").addEventListener("click", function(e) {
+        e.preventDefault();
+        openPurchaseDialog();
+    });
+        // Sample car data with more details
+        const carDatabase = [
+            { 
+                id: 1, 
+                name: "Toyota", 
+                model: "Camry", 
+                year: 2022, 
+                price: "$50/day", 
+                seats: 5, 
+                transmission: "Automatic",
+                available: true,
+                image: "img/toyota_camry.jpg"
+            },
+            { 
+                id: 2, 
+                name: "Toyota", 
+                model: "Corolla", 
+                year: 2021, 
+                price: "$45/day", 
+                seats: 5, 
+                transmission: "Automatic",
+                available: false,
+                image: "img/toyota_corolla.jpg"
+            },
+            { 
+                id: 3, 
+                name: "Honda", 
+                model: "Accord", 
+                year: 2023, 
+                price: "$55/day", 
+                seats: 5, 
+                transmission: "Automatic",
+                available: true,
+                image: "img/honda_accord.jpg"
+            },
+            { 
+                id: 4, 
+                name: "Honda", 
+                model: "Civic", 
+                year: 2022, 
+                price: "$48/day", 
+                seats: 5, 
+                transmission: "Manual",
+                available: true,
+                image: "img/honda_civic.jpg"
+            },
+            { 
+                id: 5, 
+                name: "Toyota", 
+                model: "Camry", 
+                year: 2023, 
+                price: "$60/day", 
+                seats: 5, 
+                transmission: "Automatic",
+                available: false,
+                image: "img/toyota_camry_2023.jpg"
+            },
+            { 
+                id: 6, 
+                name: "Toyota", 
+                model: "Rav4", 
+                year: 2022, 
+                price: "$65/day", 
+                seats: 5, 
+                transmission: "Automatic",
+                available: true,
+                image: "img/toyota_rav4.jpg"
+            }
+        ];
+        // File upload display
+    document.getElementById('carImage').addEventListener('change', function(e) {
+        const fileName = e.target.files[0] ? e.target.files[0].name : 'No file selected';
+        document.querySelector('.file-info').textContent = fileName;
+    });
+    
+    // Trigger file browse when button clicked
+    document.querySelector('.browse-btn').addEventListener('click', function() {
+        document.getElementById('carImage').click();
+    });
+
+        // Modal functions
+        function openSearchModal() {
+            document.getElementById('searchModal').style.display = 'block';
+        }
+
+        function closeSearchModal() {
+            document.getElementById('searchModal').style.display = 'none';
+            document.getElementById('searchResults').innerHTML = '';
+        }
+
+        // Sales dialog functions
+        function openSalesDialog() {
+            let dialog = document.getElementById("salesDialog");
+            // Clear previous inputs
+            document.getElementById("salesEmail").value = '';
+            document.getElementById("salesPhone").value = '';
+            document.getElementById("salesName").value = '';
+            document.getElementById("salesAddress").value = '';
+            document.getElementById("salesCarModel").value = '';
+            document.getElementById("salesYear").value = '';
+            document.getElementById("carCondition").value = '';
+            document.getElementById("carPrice").value = '';
+            document.getElementById("carImage").value = '';
+            dialog.showModal();
+        }
+
+        function closeSalesDialog() {
+            document.getElementById("salesDialog").close();
+        }
+
+        // Add event listener to sales service button
+        document.getElementById("salesServiceBtn").addEventListener("click", function(e) {
+            e.preventDefault();
+            openSalesDialog();
+        });
+
+        // Search function
+        function searchCars(event) {
+            event.preventDefault();
+            
+            const carName = document.getElementById('carName').value.toLowerCase();
+            const carModel = document.getElementById('carModel').value.toLowerCase();
+            
+            const results = carDatabase.filter(car => 
+                car.name.toLowerCase().includes(carName) && 
+                car.model.toLowerCase().includes(carModel)); 
+            displayResults(results);}
+
+        function displayResults(cars) {
+            const resultsContainer = document.getElementById('searchResults');
+            if (cars.length === 0) {
+                resultsContainer.innerHTML = '<p>No cars found matching your criteria.</p>';
+                return;}
+            let html = '<h3>Search Results:</h3>';
+            cars.forEach(car => {
+                html += `
+                    <div class="car-item">
+                        <div class="car-header">
+                            <div class="car-info">
+                                <h4>${car.name} ${car.model} (${car.year})</h4>
+                            </div>
+                            <div class="car-status ${car.available ? 'available' : 'unavailable'}">
+                                ${car.available ? 'Available' : 'Not Available'}
+                            </div>
+                        </div>
+                        <div class="car-details">
+                            <p><strong>Price:</strong> ${car.price}</p>
+                            <p><strong>Seats:</strong> ${car.seats}</p>
+                            <p><strong>Transmission:</strong> ${car.transmission}</p>
+                            ${car.available ? 
+                                `<a href="booking.html?carId=${car.id}" class="book-btn">Book Now</a>` : 
+                                '<p class="unavailable-text">This car is currently not available for booking</p>'
+                            } </div></div>`;});
+            resultsContainer.innerHTML = html; }
+        window.onclick = function(event) {
+            const modal = document.getElementById('searchModal');
+            if (event.target === modal) {
+                closeSearchModal();
+            }
+        }
+    </script>
+</body>
+</html>

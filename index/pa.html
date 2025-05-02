@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Form</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    line-height: 1.6;
+    text-align: center;
+    overflow: hidden;
+    animation: fadeIn 1.5s ease-in-out;
+    flex-direction: column;
+    position: relative;
+    background-image: url('img/im_4.jpg'); /* التأكد من مسار الصورة */
+    background-size: cover; /* لتغطية الخلفية بشكل كامل */
+    background-position: center; /* لضبط الصورة في وسط الصفحة */
+    background-attachment: fixed; /* لجعل الصورة ثابتة أثناء التمرير */
+    margin: 0; /* إزالة الهوامش الافتراضية */
+    padding: 0; /* إزالة الحشو الافتراضي */
+}
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+header {
+    background-color: rgba(41, 36, 36, 0.7); /* استخدام الخلفية الشفافة */
+    color: #ecf0f1;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 1, 2); /* إضافة ظل للنص */
+
+    padding: 25px 0;
+    width: 100%;
+    max-width: 650px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    margin-bottom: 40px;
+    border-radius: 20px 5px 20px 5px;
+    animation: slideInDown 0.8s ease-out;
+    position: absolute;
+    left: 0; /* هذا يضع الـ header على يسار الصفحة */
+    top: 40%; /* يمكنك تعديل هذه القيمة لضبط الـ header عمودياً */
+}
+
+
+
+
+@keyframes slideInDown {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+header h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    color: #ecdbba;
+    animation: fadeInText 1.5s ease-out;
+    text-shadow: 2px 2px 4px rgba(0, 0, 1, 2); /* إضافة ظل للنص */
+
+}
+
+@keyframes fadeInText {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+header p {
+    font-size: 18px;
+    opacity: 0.9;
+    animation: fadeInText 2s ease-out;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    background-color: rgba(21, 36, 45, 0.91); /* خلفية شفافة بنسبة 50% */
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    margin-bottom: 40px;
+    animation: zoomIn 1s ease-in-out;
+    text-align: left;     
+position: fixed; /* تعديل من absolute إلى fixed */
+left: 40%; /* تحديد المكان أفقيًا في المنتصف */
+text-shadow: 2px 2px 4px rgba(0, 0, 1, 2); /* إضافة ظل للنص */
+
+}
+
+
+
+@keyframes zoomIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 24px;
+    color: #ecdbba;
+}
+
+label {
+    font-size: 16px;
+    color: #ecf0f1;
+    display: block;
+    margin-bottom: 8px;
+    opacity: 0.8;
+    text-align: left;
+    width: 100%;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px; /* زيادة padding لجعل الحقول أكبر */
+    margin-bottom: 20px;
+    
+    border: 1px solid #bdc3c7;
+    border-radius: 8px;
+    background: #2c3e50;
+    color: #ecf0f1;
+    font-size: 16px;
+    transition: 0.3s ease;
+    outline: none;
+    opacity: 0.9;
+    text-align: left;
+}
+
+input:focus, select:focus {
+    border-color: #1abc9c;
+    background: #34495e;
+    transform: scale(1.05);
+}
+
+button {
+    width: 200px; /* تحديد عرض الزر */
+    padding: 18px;
+    border: none;
+    background-color: #4756aa;
+    color: #ecf0f1;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    margin-top: 20px;
+    opacity: 0.9;
+}
+
+
+button:hover {
+    background-color: #000000;
+    transform: scale(1.05);
+}
+
+button#home-button {
+    width: auto;
+    margin-top: 30px;
+    padding: 10px 20px;
+    background-color: #34495e;
+    border: 1px solid #1abc9c;
+    opacity: 1;
+}
+
+footer {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: #072f4a;
+    opacity: 0.8;
+    text-shadow: 2px 2px 4px rgba(0, 0, 1, 2); /* إضافة ظل للنص */
+}
+
+
+footer p {
+    margin: 0;
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+.nav-links li {
+    display: inline;
+}
+
+.nav-links a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.nav-links a:hover {
+    background-color: #1abc9c;
+}
+
+.message-section {
+    margin: 50px auto;
+    padding: 25px;
+    max-width: 600px;
+    background-color: #34495e;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+#dynamic-message {
+    font-size: 18px;
+    color: #ecdbba;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Payment System</h1>
+        <p>Please fill in your payment details</p>
+    </header>
+
+    <div class="container">
+        <h2>Payment Form</h2>
+        <form action="process_payment.php" method="POST">
+            <div class="form-group">
+                <label for="total_cost">Total Cost:</label>
+                <input type="number" id="total_cost" name="total_cost" value=<?php echo $total_cost; ?>
+                
+                <label for="reservation_id">Reservation ID</label>
+                <input type="number" id="reservation_id" name="reservation_id" required>
+            </div>
+            <label for="Amount">Amount:</label>
+            <input type="number" id="Amount" name="Amount" step="0.01" value=<?php echo $total_cost; ?  required><br>
+
+            <label for="paymentDate">Payment Date:</label>
+            <input type="date" id="paymentDate" name="paymentDate" required><br>
+
+            <label for="PaymentMethod">Payment Method:</label>
+            <select id="PaymentMethod" name="paymentMethod" required onchange="togglePaymentFields()">
+                <option value="Credit Card">Credit Card</option>
+                <option value="Cash">Cash</option>
+                <option value="Bank Transfer">Bank Transfer</option>
+                <option value="PayPal">PayPal</option>
+            </select><br>
+
+            <!-- حقل رقم البطاقة عند اختيار "Credit Card" -->
+            <div id="CreditCardField" style="display: none;">
+                <label for="CardNumber">Credit Card Number:</label>
+                <input type="text" id="CardNumber" name="CardNumber"><br>
+            </div>
+
+            <!-- حقل حساب باي بال عند اختيار "PayPal" -->
+            <div id="PayPalField" style="display: none;">
+                <label for="PayPalAccount">PayPal Account Number:</label>
+                <input type="text" id="PayPalAccount" name="PayPalAccount"><br>
+            </div>
+
+            <!-- حقل الحساب البنكي عند اختيار "Bank Transfer" -->
+            <div id="BankTransferField" style="display: none;">
+                <label for="BankAccount">Bank Account Number:</label>
+                <input type="text" id="BankAccount" name="BankAccount"><br>
+            </div>
+
+            <!-- حقل ReservationID مخفي -->
+            <input type="hidden" id="ReservationID" name="ReservationID" value="<?php echo $ReservationID; ?>">
+
+            <button type="submit">Submit Payment</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Your Company. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function togglePaymentFields() {
+            var paymentMethod = document.getElementById('PaymentMethod').value;
+            var creditCardField = document.getElementById('CreditCardField');
+            var paypalField = document.getElementById('PayPalField');
+            var bankTransferField = document.getElementById('BankTransferField');
+
+            // إخفاء جميع الحقول أولاً
+            creditCardField.style.display = 'none';
+            paypalField.style.display = 'none';
+            bankTransferField.style.display = 'none';
+
+            // إظهار الحقل المناسب بناءً على اختيار طريقة الدفع
+            if (paymentMethod === 'Credit Card') {
+                creditCardField.style.display = 'block';
+            } else if (paymentMethod === 'PayPal') {
+                paypalField.style.display = 'block';
+            } else if (paymentMethod === 'Bank Transfer') {
+                bankTransferField.style.display = 'block';
+            }
+        }
+
+        // تنفيذ الدالة عند تحميل الصفحة
+        window.onload = togglePaymentFields;
+    </script>
+</body>
+</html>

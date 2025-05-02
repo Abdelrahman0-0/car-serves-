@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Car Services for premium automotive solutions and support">
+    <title>Car Services - Contact Us | Premium Automotive Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1abc9c;
+            --primary-dark: #16a085;
+            --secondary-color: #2c3e50;
+            --secondary-light: #34495e;
+            --accent-color: #e74c3c;
+            --text-light: #ecf0f1;
+            --text-dark: #2c3e50;
+            --bg-dark: #1a1a1a;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Header/Navbar Styles */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.95);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--text-light);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 80%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+        }
+
+        /* Main Content Layout */
+        .main-content {
+            display: flex;
+            flex: 1;
+            margin-top: 70px;
+        }
+
+        .image-section {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 50%;
+            height: calc(100vh - 70px);
+            background-color: #e0e0e0;
+            background-image: url('img/Fleet_BMW_X6_M-1_1.webp');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .image-overlay {
+            background-color: rgba(26, 188, 156, 0.85);
+            padding: 2.5rem;
+            text-align: center;
+            max-width: 80%;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(0);
+            transition: transform 0.5s ease;
+        }
+
+        .image-section:hover .image-overlay {
+            transform: translateY(-10px);
+        }
+
+        .image-section h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .image-section p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .cta-button:hover {
+            background-color: transparent;
+            border-color: white;
+            transform: translateY(-3px);
+        }
+
+        .content-section {
+            margin-left: 50%;
+            width: 50%;
+            padding: 2.5rem;
+            background-color: var(--secondary-color);
+            min-height: calc(100vh - 70px);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Container Styles */
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--secondary-light);
+            border-radius: 10px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        /* Section Headers */
+        h1, h2, h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Text Styles */
+        .intro-text, p {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* About Section */
+        .about-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(26, 188, 156, 0.2);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(26, 188, 156, 0.2);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        /* Contact Tabs */
+        .contact-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--primary-color);
+        }
+
+        .contact-tab {
+            padding: 0.8rem 1.8rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: var(--transition);
+            position: relative;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .contact-tab.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .contact-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            animation: underline 0.3s ease-out;
+        }
+
+        .contact-tab:hover {
+            color: var(--primary-color);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Contact Info */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-method {
+            padding: 1.5rem;
+            background-color: rgba(26, 188, 156, 0.1);
+            border-radius: 8px;
+            transition: var(--transition);
+            border: 1px solid rgba(26, 188, 156, 0.2);
+        }
+
+        .contact-method:hover {
+            transform: translateY(-5px);
+            background-color: rgba(26, 188, 156, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-method h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .contact-method p {
+            margin-left: 2.2rem;
+        }
+
+        .contact-icon {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        /* Contact Form */
+        .contact-form .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .contact-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .contact-form input,
+        .contact-form textarea
+         {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus
+        {
+            border-color: var(--primary-dark);
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.2);
+        }
+
+        .contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(26, 188, 156, 0.1);
+            color: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+
+
+        /* Animations */
+        @keyframes underline {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .image-section {
+                position: relative;
+                width: 100%;
+                height: 400px;
+                top: auto;
+            }
+            
+            .content-section {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background-color: var(--bg-dark);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                transition: var(--transition);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .contact-tabs {
+                flex-direction: column;
+                align-items: center;
+                border-bottom: none;
+            }
+
+            .contact-tab {
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid var(--primary-color);
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .image-section {
+                height: 300px;
+            }
+
+            .image-overlay {
+                padding: 1.5rem;
+            }
+
+            .image-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .image-section p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-3 {
+            margin-bottom: 1.5rem;
+        }
+
+        .mt-3 {
+            margin-top: 1.5rem;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        
+    </style>
+</head>
+<body>
+
+
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-car-alt logo-icon"></i>
+                Car Services
+            </a>
+            <button class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-links" id="navLinks">
+                <a href="./index.html" class="nav-link">Home</a>
+                <a href="#" class="nav-link" onclick="showSection('about')">About</a>
+                <a href="#" class="nav-link active" onclick="showSection('contact')">Contact</a>
+                <a href="./feedBack.html" class="nav-link">Feedback</a>
+
+            </div>
+        </div>
+    </nav>
+    
+    <div class="main-content">
+        <div class="image-section">
+            <div class="image-overlay">
+                <h2>Premium Car Services</h2>
+                <p>Your trusted partner for automotive excellence since 2025</p>
+                <a href="#contact-section" class="cta-button pulse" onclick="switchToForm()">
+                    Get in Touch <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <div class="container">
+                <div id="about-section" class="about-section" style="display:none;">
+                    <h1>About Us</h1>
+                    <p class="intro-text">
+                        Welcome to our website! We are passionate about delivering great services and connecting with our users. This project was built with care and attention to detail. Our goal is to make your experience as smooth and useful as possible.
+                    </p>
+                    <div class="about-section">
+                        <h2>Our Mission</h2>
+                        <p>Whether you're here to learn, collaborate, or explore, we're glad to have you with us. Feel free to reach out anytime — we love hearing from you!.</p>
+                    </div>
+                    <div class="about-section mt-3">
+                        <h2>Our Values</h2>
+                        <ul style="margin-left: 2rem; color: var(--text-light);">
+                            <li style="margin-bottom: 0.8rem;">Integrity in all our dealings</li>
+                            <li style="margin-bottom: 0.8rem;">Excellence in service delivery</li>
+                            <li style="margin-bottom: 0.8rem;">Innovation in solutions</li>
+                            <li>Customer satisfaction above all</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div id="contact-section" class="contact-section">
+                    <h1>Get In Touch</h1>
+                    <p class="intro-text text-center mb-3">
+                        Have questions or need assistance? We're here to help! Choose your preferred contact method below.
+                    </p>
+                    
+                    <div class="contact-tabs">
+                        <div class="contact-tab active" data-tab="info">
+                            <i class="fas fa-info-circle contact-icon"></i> Contact Info
+                        </div>
+                        <div class="contact-tab" data-tab="form">
+                            <i class="fas fa-envelope contact-icon"></i> Send Message
+                        </div>
+                    </div>
+                    
+                    <div id="info-tab" class="tab-content active">
+                        <div class="contact-info">
+                            <div class="contact-method">
+                                <h3><i class="fas fa-map-marker-alt contact-icon"></i> Location</h3>
+                                <p>123 Automotive Street<br>City, State 12345<br>United States</p>
+                            </div>
+                            <div class="contact-method">
+                                <h3><i class="fas fa-phone-alt contact-icon"></i> Phone</h3>
+                                <p>Main: +1 (123) 456-7890<br>Support: +1 (987) 654-3210</p>
+                            </div>
+                            <div class="contact-method">
+                                <h3><i class="fas fa-envelope contact-icon"></i> Email</h3>
+                                <p>info@carservices.com<br>support@carservices.com</p>
+                            </div>
+                            <div class="contact-method">
+                                <h3><i class="fas fa-clock contact-icon"></i> Hours</h3>
+                                <p>Monday-Friday: 9AM-6PM<br>Saturday: 10AM-4PM<br>Sunday: Closed</p>
+                            </div>
+                        </div>
+                       
+                        
+             
+                        
+                        <div class="btn-group">
+                            <button class="btn-secondary" onclick="switchToForm()">
+                                <i class="fas fa-paper-plane"></i> Send us a message
+                            </button>
+                          
+                        </div>
+                    </div>
+                    
+                    <div id="form-tab" class="tab-content">
+                        <form class="contact-form" id="messageForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Your Name *</label>
+                                    <input type="text" id="name" placeholder="Enter your full name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Your Email *</label>
+                                    <input type="email" id="email" placeholder="Enter your email address" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" placeholder="Enter your phone number">
+                            </div>
+                     
+                            <div class="form-group">
+                                <label for="message">Your Message *</label>
+                                <textarea id="message" placeholder="How can we help you today?" required></textarea>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn-secondary" onclick="switchToInfo()">
+                                    <i class="fas fa-arrow-left"></i> Back to Info
+                                </button>
+                                <button type="submit" class="btn">
+                                    <i class="fas fa-paper-plane"></i> Send Message
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        function showSection(sectionId) {
+            document.getElementById('about-section').style.display = 'none';
+            document.getElementById('contact-section').style.display = 'none';
+            document.getElementById(sectionId + '-section').style.display = 'block';
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('onclick')?.includes(sectionId)) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Scroll to top of section
+            window.scrollTo(0, 0);
+        }
+        
+        function switchToForm() {
+            document.querySelectorAll('.contact-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            document.querySelector('.contact-tab[data-tab="form"]').classList.add('active');
+            document.getElementById('form-tab').classList.add('active');
+            
+            // Scroll to form
+            document.getElementById('form-tab').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function switchToInfo() {
+            document.querySelectorAll('.contact-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            document.querySelector('.contact-tab[data-tab="info"]').classList.add('active');
+            document.getElementById('info-tab').classList.add('active');
+        }
+        
+        // Form submission
+        document.getElementById('messageForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send the data to a server
+            console.log('Form submitted:', { name, email, subject, message });
+            
+            // Show success message
+            alert(`Thank you, ${name}! Your message has been sent. We'll contact you soon.`);
+            
+            // Reset form
+            this.reset();
+            
+            // Switch back to info tab
+            switchToInfo();
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up tab switching
+            document.querySelectorAll('.contact-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    document.querySelectorAll('.contact-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+            
+            // Show contact section by default
+            showSection('contact');
+            
+            // Add animation to image overlay on load
+            const imageOverlay = document.querySelector('.image-overlay');
+            setTimeout(() => {
+                imageOverlay.style.transform = 'translateY(0)';
+            }, 300);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
