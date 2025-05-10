@@ -276,7 +276,8 @@
     </header>
     <div class="feedback-container">
         <h2>Service Feedback</h2>
-        <form id="feedbackForm" method="post" action="">
+        <form id="feedbackForm" method="post" action="submit.php">
+            <input type="hidden" name="form_type" value="feedback">
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" required placeholder="Your name">

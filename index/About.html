@@ -696,25 +696,27 @@
                     </div>
                     
                     <div id="form-tab" class="tab-content">
-                        <form class="contact-form" id="messageForm">
+                        <form class="contact-form" id="messageForm" method="post" action="submit.php">
+                            <input type="hidden" name="form_type" value="contact">
+                    
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="name">Your Name *</label>
-                                    <input type="text" id="name" placeholder="Enter your full name" required>
+                                    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Your Email *</label>
-                                    <input type="email" id="email" placeholder="Enter your email address" required>
+                                    <input type="email" id="email" name="email" placeholder="Enter your email address" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="phone">Phone Number</label>
-                                <input type="tel" id="phone" placeholder="Enter your phone number">
+                                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
                             </div>
-                     
+                    
                             <div class="form-group">
                                 <label for="message">Your Message *</label>
-                                <textarea id="message" placeholder="How can we help you today?" required></textarea>
+                                <textarea id="message" name="message" placeholder="How can we help you today?" required></textarea>
                             </div>
                             <div class="btn-group">
                                 <button type="button" class="btn-secondary" onclick="switchToInfo()">
