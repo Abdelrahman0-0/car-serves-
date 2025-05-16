@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Hub</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #34495e;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 40px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-bar {
+            width: 80%;
+            max-width: 600px;
+            margin: 30px auto;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: none;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            box-shadow: 0 2px 10px rgba(26, 188, 156, 0.3);
+        }
+
+        header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: #1abc9c;
+        }
+
+        header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .section {
+            padding: 30px 5%;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            color: #1abc9c;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: #1abc9c;
+            margin: 10px auto;
+            border-radius: 3px;
+        }
+
+        /* Cars Section Styling */
+        .car-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .car-card {
+            background-color: #34495e;
+            padding: 20px;
+            border-radius: 10px;
+            width: 280px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .car-card img {
+            width: 100%;
+            height: 180px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .car-card h3 {
+            color: #ecf0f1;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .car-card p {
+            color: #bdc3c7;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .car-card button {
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .car-card button:hover {
+            background-color: #16a085;
+            transform: scale(1.02);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #34495e;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #bdc3c7;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 200;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background-color: #34495e;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 800px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #bdc3c7;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #ecf0f1;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #2c3e50;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            color: #1abc9c;
+            font-size: 24px;
+        }
+
+        .modal-body {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .car-detail {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .car-images {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .car-images img {
+            width: 120px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .car-images img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .btn-buy {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .btn-buy:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .btn-rent {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .btn-rent:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-contact {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .btn-contact:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 28px;
+            }
+            
+            .car-card {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 25px 0;
+            }
+            
+            header h1 {
+                font-size: 24px;
+            }
+            
+            header p {
+                font-size: 16px;
+            }
+            
+            .section h2 {
+                font-size: 22px;
+            }
+            
+            .modal-body {
+                flex-direction: column;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+        .logo1 {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001; /* لجعل الشعار فوق شريط التنقل */
+    display: flex;
+    align-items: center; /* إضافة هذه الخاصية لجعل الشعار فوق العناصر الأخرى */
+}
+.logo1 img {
+    width: 70px;
+    height: auto;
+    border-radius: 100px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.dropdown-menu {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    display: none;
+    position: absolute;
+    font-weight: bold;
+    top: 100%;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    z-index: 1000;
+}
+.dropdown-menu li {
+    padding: 10px 20px;
+}
+
+.dropdown-menu li a {
+    color: #bdc3c7;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #557770;
+}
+
+.logo1:hover .dropdown-menu {
+    display: block;
+}
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo1">
+            <img src="img/logo.png" alt="Car Rental Logo">
+            <ul class="dropdown-menu">
+                <li><a href="feedBack.html" onclick="showSection('services')">Feedback</a></li>
+                <li><a href="index.html" onclick="showSection('services')">Home</a></li>
+
+                <li><a href="servic.html" onclick="showSection('services')">Services</a></li>
+                <li><a href="About.html" onclick="showSection('contact')">Contact</a></li>
+                <li><a href="login.html" id="auth-link">Logout</a></li>
+            </ul>
+        </div>
+    
+
+        <h1>Welcome to Car Hub</h1>
+        <p>Find your dream car at the best prices</p>
+    </header>
+
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search for a car..." onkeyup="searchCars()">
+    </div>
+
+    <!-- New Cars -->
+    <section class="section">
+        <h2>New Cars for Sale</h2>
+        <div class="car-container">
+            <div class="car-card" data-name="Toyota Corolla">
+                <img src="https://via.placeholder.com/400x250?text=Toyota+Corolla" alt="Toyota Corolla">
+                <h3>Toyota Corolla 2024</h3>
+                <p>Price: EGP 550,000</p>
+                <button onclick="openDetails('Toyota Corolla', 'Red, Black, Silver', '550,000', 'New', 'Automatic, 1.6L Engine, 5 Seats')">View Details</button>
+            </div>
+            <div class="car-card" data-name="Mazda 3">
+                <img src="https://via.placeholder.com/400x250?text=Mazda+3" alt="Mazda 3">
+                <h3>Mazda 3 2024</h3>
+                <p>Price: EGP 580,000</p>
+                <button onclick="openDetails('Mazda 3', 'White, Blue, Gray', '580,000', 'New', 'Automatic, 2.0L Engine, Panoramic Sunroof')">View Details</button>
+            </div>
+            <div class="car-card" data-name="Hyundai Elantra">
+                <img src="https://via.placeholder.com/400x250?text=Hyundai+Elantra" alt="Hyundai Elantra">
+                <h3>Hyundai Elantra 2024</h3>
+                <p>Price: EGP 600,000</p>
+                <button onclick="openDetails('Hyundai Elantra', 'Black, Silver, Bronze', '600,000', 'New', 'Automatic, 1.8L Engine, Smart Key')">View Details</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cars for Rent -->
+    <section class="section">
+        <h2>Cars for Rent</h2>
+        <div class="car-container">
+            <div class="car-card" data-name="Honda Civic">
+                <img src="https://via.placeholder.com/400x250?text=Honda+Civic" alt="Honda Civic">
+                <h3>Honda Civic 2023</h3>
+                <p>Rent: EGP 1,200 / day</p>
+                <button onclick="openDetails('Honda Civic', 'Gray, Black', '1,200/day', 'Rent', 'Automatic, 1.5L Turbo, LED Headlights')">View Details</button>
+            </div>
+            <div class="car-card" data-name="Renault Logan">
+                <img src="https://via.placeholder.com/400x250?text=Renault+Logan" alt="Renault Logan">
+                <h3>Renault Logan 2023</h3>
+                <p>Rent: EGP 950 / day</p>
+                <button onclick="openDetails('Renault Logan', 'Silver, Blue', '950/day', 'Rent', 'Manual, 1.6L Engine, Economical')">View Details</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Used Cars -->
+    <section class="section">
+        <h2>Used Cars for Sale</h2>
+        <div class="car-container">
+            <div class="car-card" data-name="Kia Cerato">
+                <img src="https://via.placeholder.com/400x250?text=Kia+Cerato" alt="Kia Cerato">
+                <h3>Kia Cerato 2020</h3>
+                <p>Price: EGP 330,000</p>
+                <button onclick="openDetails('Kia Cerato', 'Gray', '330,000', 'Used', 'Automatic, 2.0L Engine, 45,000 km')">View Details</button>
+            </div>
+            <div class="car-card" data-name="Nissan Sunny">
+                <img src="https://via.placeholder.com/400x250?text=Nissan+Sunny" alt="Nissan Sunny">
+                <h3>Nissan Sunny 2019</h3>
+                <p>Price: EGP 280,000</p>
+                <button onclick="openDetails('Nissan Sunny', 'White, Silver', '280,000', 'Used', 'Manual, 1.6L Engine, 60,000 km')">View Details</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for Car Details -->
+    <div id="carModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="modal-header">
+                <h3 id="modalCarName"></h3>
+                <p id="modalCarPrice"></p>
+            </div>
+            <div class="modal-body">
+                <div class="car-detail">
+                    <h4>Details</h4>
+                    <p id="modalCarType"></p>
+                    <p id="modalCarFeatures"></p>
+                </div>
+                <div class="car-detail">
+                    <h4>Available Colors</h4>
+                    <p id="modalCarColors"></p>
+                    <div class="car-images" id="modalCarImages"></div>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-buy" id="buyBtn" onclick="buyCar()">Buy Now</button>
+                <button class="btn btn-rent" id="rentBtn" onclick="rentCar()">Rent Now</button>
+                <button class="btn btn-contact" onclick="contactUs()">Contact Us</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Car Hub. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Search Functionality
+        function searchCars() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toUpperCase();
+            const carCards = document.querySelectorAll('.car-card');
+            
+            carCards.forEach(card => {
+                const carName = card.getAttribute('data-name').toUpperCase();
+                if (carName.includes(filter)) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+        
+        // Modal Functions
+        let currentCarType = '';
+        
+        function openDetails(name, colors, price, type, features) {
+            currentCarType = type;
+            const modal = document.getElementById('carModal');
+            document.getElementById('modalCarName').textContent = name;
+            document.getElementById('modalCarPrice').textContent = type === 'Rent' ? `Price: EGP ${price}` : `Price: EGP ${price}`;
+            document.getElementById('modalCarType').textContent = `Type: ${type}`;
+            document.getElementById('modalCarFeatures').textContent = `Features: ${features}`;
+            document.getElementById('modalCarColors').textContent = `Colors: ${colors}`;
+            
+            // Update button visibility based on car type
+            const buyBtn = document.getElementById('buyBtn');
+            const rentBtn = document.getElementById('rentBtn');
+            
+            if (type === 'Rent') {
+                buyBtn.style.display = 'none';
+                rentBtn.style.display = 'block';
+                rentBtn.textContent = `Rent for EGP ${price}`;
+            } else {
+                buyBtn.style.display = 'block';
+                rentBtn.style.display = 'none';
+                buyBtn.textContent = `Buy for EGP ${price}`;
+            }
+            
+            // Create image placeholders based on colors
+            const imagesContainer = document.getElementById('modalCarImages');
+            imagesContainer.innerHTML = '';
+            const colorList = colors.split(', ');
+            
+            colorList.forEach(color => {
+                const img = document.createElement('img');
+                img.src = `https://via.placeholder.com/120x80?text=${name}+${color.trim()}`;
+                img.alt = `${name} ${color}`;
+                imagesContainer.appendChild(img);
+            });
+            
+            modal.style.display = "block";
+        }
+        
+        function closeModal() {
+            document.getElementById('carModal').style.display = "none";
+        }
+        
+        // Action Functions
+        function buyCar() {
+            const carName = document.getElementById('modalCarName').textContent;
+            alert(`Thank you for your interest in buying the ${carName}. Our sales team will contact you shortly.`);
+            closeModal();
+        }
+        
+        function rentCar() {
+            const carName = document.getElementById('modalCarName').textContent;
+            alert(`Thank you for your interest in renting the ${carName}. Our rental team will contact you shortly.`);
+            closeModal();
+        }
+        
+        function contactUs() {
+            alert('Please call us at +20 123 456 7890 or email us at info@carhub.com');
+        }
+        
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('carModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

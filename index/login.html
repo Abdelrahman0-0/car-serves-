@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('img/wallpaper2-2880x1620.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 20px;
+        }
+button {
+    display: block;
+    width: 100%; 
+    padding: 12px;
+    border: none;
+    background-color: #1abc9c;
+    color: #ecf0f1;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 15px; 
+}
+button:hover {
+    background-color: #16a085;
+}
+.container {
+    width: 90%;
+    max-width: 600px;
+    margin: 30px auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgb(0, 0, 0);
+
+    padding: 20px;
+    
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    box-shadow: 0 8px 16px rgb(0, 0, 0);
+    backdrop-filter: blur(1px);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #ecdbba; 
+}
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #767879;
+    border-radius: 8px;
+    background: #2c3e50;
+    color: #ecf0f1;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+input:focus, select:focus {
+    border-color: #1abc9c;
+    outline: none;
+    background: #34495e;
+}
+footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+    color: #bdc3c7;
+}  
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.center-container {
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+}
+p {
+    font-size: 18px; 
+    opacity: 0.9; 
+    color: #bdc3c7; 
+}       
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            border-radius: 5px;
+            position: relative;
+        }
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form action="co_login.php" method="post" id="loginForm">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required placeholder="Email">
+        
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required placeholder="Password">
+        
+            <button type="submit">Login</button>
+        </form>       
+        <p id="message"></p>
+        <p>
+            Don't have an account? 
+            <a href="Create_Customer_Account.html" style="color: rgb(156, 156, 194); text-decoration: underline;">Create one</a>
+            <p><a href="forgot_password.php" style="color: rgb(156, 156, 194); text-decoration: underline;">Forgot your password?</a></p>
+
+        </p>
+    </div>
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>تم التسجيل بنجاح! سيتم الانتقال إلى الصفحة الرئيسية...</p>
+        </div>
+    </div>
+
+    <script>
+       document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("loginForm");
+    const message = document.getElementById("message");
+    
+    // التحقق من وجود رسائل خطأ في URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+    
+    if (error) {
+        message.style.color = "red";
+        switch(error) {
+            case 'invalid_password':
+                message.textContent = "كلمة المرور غير صحيحة";
+                break;
+            case 'user_not_found':
+                message.textContent = "البريد الإلكتروني غير مسجل";
+                break;
+            case 'invalid_request':
+                message.textContent = "طلب غير صالح";
+                break;
+            default:
+                message.textContent = "حدث خطأ أثناء تسجيل الدخول";
+        }
+    }
+    
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        
+        // تنظيف رسائل الخطأ السابقة
+        message.textContent = "";
+        
+        // التحقق من صحة الإيميل
+        const email = document.getElementById("email").value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!email) {
+            message.style.color = "red";
+            message.textContent = "الرجاء إدخال البريد الإلكتروني";
+            return;
+        } else if (!emailRegex.test(email)) {
+            message.style.color = "red";
+            message.textContent = "الرجاء إدخال بريد إلكتروني صحيح";
+            return;
+        }
+        
+        // التحقق من كلمة المرور
+        const password = document.getElementById("password").value.trim();
+        if (!password) {
+            message.style.color = "red";
+            message.textContent = "الرجاء إدخال كلمة المرور";
+            return;
+        }
+        
+        // إذا كانت جميع البيانات صحيحة، إرسال النموذج
+        form.submit();
+    });
+});
+    </script>
+</body>
+</html>
